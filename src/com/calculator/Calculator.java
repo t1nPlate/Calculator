@@ -1,20 +1,25 @@
 package com.calculator;
 
+import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class Calculator {
     public static void main(String[] args) throws IOException {
-        final String fileName = "C:/Users/Dmitryi/IdeaProjects/Calculator/src/com/calculator/input.txt";
-        FileReader fl = new FileReader(fileName);
+        File fileInput = new File("input.txt");
+        File fileOutput = new File("output.txt");
+        String result;
+        FileReader fl = new FileReader(fileInput);
+        FileWriter fw = new FileWriter(fileOutput, false);
         Scanner sc = new Scanner(fl);
-        try {
-            calculate(sc.nextLine());
-        } catch (NoSuchElementException ex) {
-            System.out.println("Empty line");
-        }
+
+        result = calculate(sc.nextLine());
+        fw.write(result + "\n");
+        fw.flush();
+        System.out.println(result);
     }
 
     static double division(double a, double b) throws Exception {
@@ -22,29 +27,34 @@ public class Calculator {
         return a/b;
     }
 
-    static void calculate(String str) {
+    static String calculate(String str) {
         String[] operation = str.split(" ");
+        String result = "";
         double a, b;
         try {
             a = Double.parseDouble(operation[0]);
             b = Double.parseDouble(operation[2]);
         } catch (IllegalArgumentException ex) {
-            System.out.println("Error! Not number");
-            return;
+            result = "Error! Not number";
+            return result;
+        } catch (NoSuchElementException ex) {
+            result = "Empty line";
+            return result;
         }
         switch (operation[1]) {
-            case "+" : System.out.println(Math.round(Double.sum(a, b) * 100) / 100.0); break;
-            case "-" : System.out.println(Math.round((a - b) * 100) / 100.0); break;
-            case "*" : System.out.println(Math.round((a * b) * 100) / 100.0); break;
+            case "+" : result = String.valueOf(Math.round(Double.sum(a, b) * 100) / 100.0); break;
+            case "-" : result = String.valueOf(Math.round((a - b) * 100) / 100.0); break;
+            case "*" : result = String.valueOf(Math.round((a * b) * 100) / 100.0); break;
             case "/" :
                 try {
-                    System.out.println(division(a, b));
+                    result = String.valueOf(division(a, b));
                     break;
                 } catch (Exception ex) {
                     System.out.println(ex.getMessage());
                     break;
                 }
-            default : System.out.println("Operation Error!"); break;
+            default : result = "Operation Error!"; break;
         }
+        return result;
     }
 }
