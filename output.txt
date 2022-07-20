@@ -1,1 +1,5 @@
-44.0
+22 + 22 = 44.0
+44 - 12 = 32.0
+15 / 0 = Error! Division by zero
+fds - 432 = Error! Not number
+22 f 43 = Operation Error!
