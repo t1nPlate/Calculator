@@ -1,16 +1,15 @@
 package com.calculator;
 
+import java.io.FileReader;
 import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class Calculator {
     public static void main(String[] args) throws IOException {
         final String fileName = "C:/Users/Dmitryi/IdeaProjects/Calculator/src/com/calculator/input.txt";
-        Path path = Paths.get(fileName);
-        Scanner sc = new Scanner(path);
+        FileReader fl = new FileReader(fileName);
+        Scanner sc = new Scanner(fl);
         try {
             calculate(sc.nextLine());
         } catch (NoSuchElementException ex) {
